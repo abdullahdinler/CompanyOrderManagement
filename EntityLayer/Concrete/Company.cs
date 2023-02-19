@@ -13,6 +13,9 @@ namespace EntityLayer.Concrete
         public bool Status { get; set; }
         public DateTime OrderAllowStartTime { get; set; }
         public DateTime OrderAllowFinishTime { get; set; }
+
+
         public ICollection<Product>? Products { get; set; }
+        public ICollection<Order>? Orders { get; set; }
     }
 }

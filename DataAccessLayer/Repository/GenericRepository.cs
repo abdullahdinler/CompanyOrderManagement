@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
-using DataAccessLayer.Concrete;
 
 namespace DataAccessLayer.Repository
 {
     public class GenericRepository<T> : IRepository<T> where T : class
     {
-        private readonly Context _context = new();
+        private readonly Context _context;
         private readonly DbSet<T> _object;
 
-        public GenericRepository()
+        public GenericRepository(Context context)
         {
+            _context = context;
             _object = _context.Set<T>();
         }
 

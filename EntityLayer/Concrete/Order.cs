@@ -14,6 +14,7 @@ namespace EntityLayer.Concrete
         public string? CustomerName { get; set; }
         public DateTime OrderDate { get; set; }
 
+        public Company? Company { get; set; }
         public Product? Product { get; set; }
     }
 }

@@ -10,12 +10,31 @@ namespace DataAccessLayer.Concrete
 {
     public class Context:DbContext
     {
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public Context(DbContextOptions options) : base(options)
         {
-            optionsBuilder.UseSqlServer(
-                @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=CompanyOrderManagementDB;Integrated Security=True");
+
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Company)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CompanyId);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.Company)
+                .WithMany(c => c.Orders)
+                .HasForeignKey(o => o.CompanyId);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.Product)
+                .WithMany(p => p.Orders)
+                .HasForeignKey(o => o.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+        }
+
 
         public DbSet<Company>? Companies { get; set; }
         public DbSet<Product>? Products { get; set; }
